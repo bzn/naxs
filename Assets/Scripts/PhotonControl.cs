@@ -56,7 +56,7 @@ public class PhotonControl : Photon.PunBehaviour
         {
             return;
         }
-        Debug.Log("我們已進入遊戲場景了,耶~");
+        Debug.Log("我們已進入遊戲場景了,耶~");        
     }
 }
 
