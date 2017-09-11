@@ -2,18 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainControl : MonoBehaviour {
-    private DummyControl dummyControl;
-	// Use this for initialization
-	void Start ()
+public class MainControl : MonoBehaviour
+{
+    public GameObject cameraPos;
+    public GameObject controllerLPos;
+    public GameObject controllerRPos;
+    public GameObject dummysData;
+    public static MainControl instance;
+
+    void Awake()
     {
-        if(PhotonNetwork.isMasterClient)
+        if (instance != null)
         {
-            dummyControl = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0).GetComponent<DummyControl>();
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+    }
+
+    void Start ()
+    {
+        if (PhotonNetwork.inRoom)
+        {
+            Debug.Log("PID" + PhotonNetwork.player.ID);
+            GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
         }
         else
         {
-            dummyControl = PhotonNetwork.Instantiate("Dummy", new Vector3(4, 0, 4), Quaternion.identity, 0).GetComponent<DummyControl>();
+            // Offline Test
+            GameObject dummyGO = Instantiate(Resources.Load("Dummy", typeof(GameObject))) as GameObject;
         }        
     }
 }
