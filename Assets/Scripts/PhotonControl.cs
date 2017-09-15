@@ -27,8 +27,7 @@ public class PhotonControl : Photon.PunBehaviour
 
     public override void OnConnectedToMaster()
     {
-        // 連上 MasterServer 後,  Button (UI) 就可以顯示或是執行其它後續動作.
-        Debug.Log("已連上 Master Server");
+        Debug.Log("Master Server Connected");
         JoinGameRoom();
     }
 
@@ -41,8 +40,8 @@ public class PhotonControl : Photon.PunBehaviour
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("您已進入遊戲室!!");
-        // 如果是Master Client, 即可建立/初始化,與載入遊戲場景
+        Debug.Log("Enter Game Room");
+
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.LoadLevel("MainScene");
@@ -51,12 +50,13 @@ public class PhotonControl : Photon.PunBehaviour
 
     void OnLevelWasLoaded(int levelNumber)
     {
-        // 若不在Photon的遊戲室內, 則網路有問題..
         if (!PhotonNetwork.inRoom)
         {
+            // Error
+            // ....
             return;
         }
-        Debug.Log("我們已進入遊戲場景了,耶~");        
+        Debug.Log("Enter Scene");
     }
 }
 
