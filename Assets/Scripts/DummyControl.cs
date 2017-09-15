@@ -6,7 +6,7 @@ public class DummyControl : MonoBehaviour
 {
     public GameObject headPos;    
     public GameObject handLPos;
-    public GameObject handRPos;
+    public GameObject handRPos;    
     private PhotonView photonView;
     void Start()
     {
@@ -28,11 +28,15 @@ public class DummyControl : MonoBehaviour
         handRPos.transform.parent = MainControl.instance.dummysData.transform;
         handRPos.transform.localPosition = new Vector3(0, 0, 0);
         handRPos.transform.localRotation = Quaternion.identity;
+
+        Debug.Log("photonView.isMine=" + photonView.isMine.ToString());
+        Debug.Log("PhotonNetwork.inRoom=" + PhotonNetwork.inRoom.ToString());
+        Debug.Log("photonView.viewID=" + photonView.viewID.ToString());
     }
 
     void Update()
-    {
-        if (photonView.isMine || !PhotonNetwork.inRoom)
+    {        
+        if (photonView.isMine)
         {
             headPos.transform.position = MainControl.instance.cameraPos.transform.position;
             headPos.transform.rotation = MainControl.instance.cameraPos.transform.rotation;
