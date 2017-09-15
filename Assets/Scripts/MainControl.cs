@@ -25,6 +25,7 @@ public class MainControl : MonoBehaviour
         if (PhotonNetwork.inRoom)
         {
             Debug.Log("PID" + PhotonNetwork.player.ID);
+            PhotonNetwork.playerName = "Player " + PhotonNetwork.player.ID.ToString();
             GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
         }
         else

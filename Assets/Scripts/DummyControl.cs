@@ -36,7 +36,7 @@ public class DummyControl : MonoBehaviour
 
     void Update()
     {        
-        if (photonView.isMine)
+        if (photonView.isMine || !PhotonNetwork.inRoom)
         {
             headPos.transform.position = MainControl.instance.cameraPos.transform.position;
             headPos.transform.rotation = MainControl.instance.cameraPos.transform.rotation;
