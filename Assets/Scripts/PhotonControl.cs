@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PhotonControl : Photon.PunBehaviour
 {
-    public static PhotonControl instance;
-    public static GameObject localPlayer;
+    public static PhotonControl instance;    
+    public TextAsset deviceIDTxt;
+    public int deviceID = -1;
 
     void Awake()
     {
+        Debug.Log("device ID="+deviceIDTxt.text);
+        deviceID = int.Parse(deviceIDTxt.text);
+
         if (instance != null)
         {
             DestroyImmediate(gameObject);
