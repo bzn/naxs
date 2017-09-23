@@ -10,6 +10,9 @@ public class MainControl : MonoBehaviour
     public GameObject dummysData;
     public static MainControl instance;
 
+    public GameObject gameMasterControl;
+    public GameObject cameraRig;
+
     void Awake()
     {
         if (instance != null)
@@ -24,9 +27,19 @@ public class MainControl : MonoBehaviour
     {
         if (PhotonNetwork.inRoom)
         {
-            Debug.Log("PID" + PhotonNetwork.player.ID);
-            PhotonNetwork.playerName = "Player " + PhotonNetwork.player.ID.ToString();
-            GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
+            if(PhotonControl.instance.deviceID == 0)
+            {
+                gameMasterControl.SetActive(true);
+                cameraRig.SetActive(false);
+            }
+            else
+            {
+                gameMasterControl.SetActive(false);
+                cameraRig.SetActive(true);
+                Debug.Log("PID" + PhotonNetwork.player.ID);
+                PhotonNetwork.playerName = "DeviceID" + PhotonControl.instance.deviceID.ToString();
+                GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
+            }
         }
         else
         {
