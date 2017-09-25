@@ -53,6 +53,8 @@ public class PhotonControl : Photon.PunBehaviour
     {
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 6;
+        PhotonNetwork.playerName = deviceID.ToString();
+
         PhotonNetwork.JoinOrCreateRoom("MainRoom", options, TypedLobby.Default);
     }    
 

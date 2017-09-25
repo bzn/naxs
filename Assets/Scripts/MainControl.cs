@@ -38,7 +38,7 @@ public class MainControl : MonoBehaviour
                 gameMasterControl.SetActive(false);
                 cameraRig.SetActive(true);
                 Debug.Log("PID" + PhotonNetwork.player.ID);
-                PhotonNetwork.playerName = PhotonControl.instance.deviceID.ToString();
+                
                 GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
             }
 
