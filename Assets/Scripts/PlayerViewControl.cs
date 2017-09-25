@@ -76,5 +76,6 @@ public class PlayerViewControl : MonoBehaviour
     public void SetPosText(Vector3 v3)
     {
         posString = "(" + v3.x + "," + v3.y + "," + v3.z + ")";
+        posText.text = posString;
     }
 }
