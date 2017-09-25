@@ -41,6 +41,9 @@ public class MainControl : MonoBehaviour
                 PhotonNetwork.playerName = PhotonControl.instance.deviceID.ToString();
                 GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
             }
+
+            // blues debug
+            gameMasterControl.SetActive(true);
         }
         else
         {
