@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class PhotonControl : Photon.PunBehaviour
 {
     public static PhotonControl instance;    
     public int deviceID = -1;
+    public Text testText;
 
     void Awake()
     {
@@ -17,8 +19,12 @@ public class PhotonControl : Photon.PunBehaviour
             string input = "";
             input = sr.ReadLine();
             deviceID = int.Parse(input);
-            Debug.Log("device ID=" + deviceID.ToString());
+            SetTestText("device ID=" + deviceID.ToString());
             sr.Close();
+        }
+        else
+        {
+            SetTestText("Can't find "+ path);
         }
 
         if (instance != null)
@@ -69,6 +75,16 @@ public class PhotonControl : Photon.PunBehaviour
             return;
         }
         Debug.Log("Enter Scene");
+    }
+
+    public void SetTestText(string str)
+    {
+        testText.text = str;
+    }
+
+    public void AddTestText(string str)
+    {
+        testText.text += "\n"+str;
     }
 }
 

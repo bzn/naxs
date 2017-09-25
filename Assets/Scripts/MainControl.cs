@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MainControl : MonoBehaviour
 {
     public GameObject cameraPos;
@@ -11,7 +12,7 @@ public class MainControl : MonoBehaviour
     public static MainControl instance;
 
     public GameObject gameMasterControl;
-    public GameObject cameraRig;
+    public GameObject cameraRig;    
 
     void Awake()
     {
@@ -37,7 +38,7 @@ public class MainControl : MonoBehaviour
                 gameMasterControl.SetActive(false);
                 cameraRig.SetActive(true);
                 Debug.Log("PID" + PhotonNetwork.player.ID);
-                PhotonNetwork.playerName = "DeviceID" + PhotonControl.instance.deviceID.ToString();
+                PhotonNetwork.playerName = PhotonControl.instance.deviceID.ToString();
                 GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
             }
         }
@@ -47,4 +48,6 @@ public class MainControl : MonoBehaviour
             GameObject dummyGO = Instantiate(Resources.Load("Dummy", typeof(GameObject))) as GameObject;
         }        
     }
+
+    
 }

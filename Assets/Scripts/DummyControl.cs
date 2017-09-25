@@ -32,6 +32,8 @@ public class DummyControl : MonoBehaviour
         Debug.Log("photonView.isMine=" + photonView.isMine.ToString());
         Debug.Log("PhotonNetwork.inRoom=" + PhotonNetwork.inRoom.ToString());
         Debug.Log("photonView.viewID=" + photonView.viewID.ToString());
+
+        PhotonControl.instance.AddTestText("photon nickname="+photonView.owner.NickName);
     }
 
     void Update()
