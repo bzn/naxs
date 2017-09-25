@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class PhotonControl : Photon.PunBehaviour
 {
     public static PhotonControl instance;    
-    public TextAsset deviceIDTxt;
     public int deviceID = -1;
 
     void Awake()
     {
-        Debug.Log("device ID="+deviceIDTxt.text);
-        deviceID = int.Parse(deviceIDTxt.text);
+        string path = Application.dataPath + "//DeviceID.txt";
+        if (File.Exists(path))
+        {
+            StreamReader sr = File.OpenText(path);
+            string input = "";
+            input = sr.ReadLine();
+            deviceID = int.Parse(input);
+            Debug.Log("device ID=" + deviceID.ToString());
+            sr.Close();
+        }
 
         if (instance != null)
         {
