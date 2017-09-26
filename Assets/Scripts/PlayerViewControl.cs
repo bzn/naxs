@@ -14,7 +14,6 @@ public class PlayerViewControl : MonoBehaviour
     public Text netStateText;
     public Text viveStateText;
     public Text sceneText;
-    public Text posText;
     public Text pingText;
 
     void Awake()
@@ -60,11 +59,6 @@ public class PlayerViewControl : MonoBehaviour
     {
         sceneID = id;
         sceneText.text = id.ToString();
-    }
-
-    public void SetPosText(Vector3 v3)
-    {
-        posText.text = "(" + v3.x + "," + v3.y + "," + v3.z + ")";
     }
 
     public void SetPing(int ping)

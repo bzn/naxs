@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class PhotonControl : Photon.PunBehaviour
 {
-    public static PhotonControl instance;    
+    public static PhotonControl instance;
+    public float updateRate = 1.0f;
     public int deviceID = -1;
     public Text logText;
     public Text pingText;
@@ -41,7 +42,7 @@ public class PhotonControl : Photon.PunBehaviour
 
     void Start()
     {
-        InvokeRepeating("UpdateStatus", 0, 1f);
+        InvokeRepeating("UpdateStatus", 0, updateRate);
         PhotonNetwork.ConnectUsingSettings("v1.0");
     }
 
