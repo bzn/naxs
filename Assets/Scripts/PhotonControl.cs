@@ -7,11 +7,10 @@ using UnityEngine.UI;
 public class PhotonControl : Photon.PunBehaviour
 {
     public static PhotonControl instance;
-    public float updateRate = 1.0f;
+    
     public int deviceID = -1;
     public Text logText;
-    public Text pingText;
-    public int nowSceneID = -1;
+
     void Awake()
     {
         string path = Application.dataPath + "//DeviceID.txt";
@@ -29,6 +28,7 @@ public class PhotonControl : Photon.PunBehaviour
             SetTestText("Can't find "+ path);
         }
 
+
         if (instance != null)
         {
             DestroyImmediate(gameObject);
@@ -41,8 +41,7 @@ public class PhotonControl : Photon.PunBehaviour
     }
 
     void Start()
-    {
-        InvokeRepeating("UpdateStatus", 0, updateRate);
+    {        
         PhotonNetwork.ConnectUsingSettings("v1.0");
     }
 
@@ -68,7 +67,6 @@ public class PhotonControl : Photon.PunBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.LoadLevel("MainScene");
-            nowSceneID = 1;
         }
     }
 
@@ -91,44 +89,6 @@ public class PhotonControl : Photon.PunBehaviour
     public void AddTestText(string str)
     {
         logText.text += "\n"+str;
-    }
-
-    private void UpdateStatus()
-    {
-        string status = PhotonNetwork.connectionStateDetailed.ToString();
-        int ping = PhotonNetwork.GetPing();
-        SetPingText(status + "\n" + ping + " ms");
-
-        // TODO (VIVE Status)
-        // ....
-        bool isHelmet = true;
-        bool isTracker = true;
-
-        int sceneID = nowSceneID;
-
-        if (PhotonNetwork.inRoom)
-        {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneID);
-        }            
-    }
-
-    private void SetPingText(string str)
-    {
-        pingText.text = str;
-    }
-
-    [PunRPC]
-    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, int sceneID)
-    {
-        if (id > 0)
-        {         
-            if(MainControl.instance.gameMasterControl.activeSelf)
-            {
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneID(sceneID);
-            }            
-        }
-    }
+    }   
 }
 

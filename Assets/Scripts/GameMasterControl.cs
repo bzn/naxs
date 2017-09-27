@@ -105,18 +105,18 @@ public class GameMasterControl : MonoBehaviour
     private void mainSceneButtonOnClick()
     {
         PhotonNetwork.LoadLevel("MainScene");
-        PhotonControl.instance.nowSceneID = 1;
+        MainControl.instance.nowSceneID = 1;
     }
 
     private void scene2ButtonOnClick()
     {
         PhotonNetwork.LoadLevel("Scene2");
-        PhotonControl.instance.nowSceneID = 2;
+        MainControl.instance.nowSceneID = 2;
     }
 
     private void scene3ButtonOnClick()
     {
         PhotonNetwork.LoadLevel("Scene3");
-        PhotonControl.instance.nowSceneID = 3;
+        MainControl.instance.nowSceneID = 3;
     }
 }

@@ -13,6 +13,7 @@ public class MainControl : MonoBehaviour
 
     public GameObject gameMasterControl;
     public GameObject cameraRig;
+    public int nowSceneID = -1;
     public PlayerViewsControl playerViewsControl;
 
     void Awake()
@@ -28,6 +29,8 @@ public class MainControl : MonoBehaviour
 
     void Start ()
     {
+        nowSceneID = 1;
+
         if (PhotonNetwork.inRoom)
         {
             if(PhotonControl.instance.deviceID == 0)
