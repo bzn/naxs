@@ -29,8 +29,7 @@ public class GameMasterControl : MonoBehaviour
     {
         godCamera.transform.parent = parent.transform;
         godCamera.transform.localPosition = new Vector3(0, 0, 0);
-        godCamera.transform.localRotation = Quaternion.identity;
-        godCamera.transform.localEulerAngles = new Vector3(-90f, 0, 90f);
+        godCamera.transform.localRotation = Quaternion.identity;        
     }
 
     private void GodButtonOnClick()
@@ -47,6 +46,7 @@ public class GameMasterControl : MonoBehaviour
             if (deviceID == buttonID)
             {
                 SetGodCameraParent(gameObjects[i]);
+                godCamera.transform.localEulerAngles = new Vector3(-90f, 0, 90f);
                 break;
             }
         }
