@@ -30,6 +30,7 @@ public class GameMasterControl : MonoBehaviour
         godCamera.transform.parent = parent.transform;
         godCamera.transform.localPosition = new Vector3(0, 0, 0);
         godCamera.transform.localRotation = Quaternion.identity;
+        godCamera.transform.localEulerAngles = new Vector3(-90f, 0, 90f);
     }
 
     private void GodButtonOnClick()
