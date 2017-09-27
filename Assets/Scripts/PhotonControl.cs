@@ -12,7 +12,6 @@ public class PhotonControl : Photon.PunBehaviour
     public Text logText;
     public Text pingText;
     public int nowSceneID = -1;
-
     void Awake()
     {
         string path = Application.dataPath + "//DeviceID.txt";
@@ -105,7 +104,7 @@ public class PhotonControl : Photon.PunBehaviour
         bool isHelmet = true;
         bool isTracker = true;
 
-        int sceneID = PhotonControl.instance.nowSceneID;
+        int sceneID = nowSceneID;
 
         if (PhotonNetwork.inRoom)
         {
@@ -125,10 +124,9 @@ public class PhotonControl : Photon.PunBehaviour
         {         
             if(MainControl.instance.gameMasterControl.activeSelf)
             {
-                PlayerViewControl pvc = MainControl.instance.playerViewsControl.playerViewControl[id - 1];
-                pvc.SetNetState(status);
-                pvc.SetPing(ping);
-                pvc.SetSceneID(sceneID);
+                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
+                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
+                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneID(sceneID);
             }            
         }
     }
