@@ -9,7 +9,8 @@ using Valve.VR;
 
 public class SteamVR_ControllerManager : MonoBehaviour
 {
-	public GameObject left, right;
+    public static SteamVR_ControllerManager instance;
+    public GameObject left, right;
 
 	[Tooltip("Populate with objects you want to assign to additional controllers")]
 	public GameObject[] objects;
@@ -56,10 +57,17 @@ public class SteamVR_ControllerManager : MonoBehaviour
 
 	void Awake()
 	{
-		UpdateTargets();
+        if (instance != null)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        UpdateTargets();
 	}
 
-	SteamVR_ControllerManager()
+    SteamVR_ControllerManager()
 	{
 		inputFocusAction = SteamVR_Events.InputFocusAction(OnInputFocus);
 		deviceConnectedAction = SteamVR_Events.DeviceConnectedAction(OnDeviceConnected);

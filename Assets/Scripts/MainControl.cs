@@ -13,7 +13,6 @@ public class MainControl : MonoBehaviour
 
     public GameObject gameMasterControl;
     public GameObject cameraRig;
-
     public PlayerViewsControl playerViewsControl;
 
     void Awake()
@@ -24,6 +23,7 @@ public class MainControl : MonoBehaviour
             return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start ()

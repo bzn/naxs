@@ -11,6 +11,7 @@ public class PhotonControl : Photon.PunBehaviour
     public int deviceID = -1;
     public Text logText;
     public Text pingText;
+    public int nowSceneID = -1;
 
     void Awake()
     {
@@ -68,6 +69,7 @@ public class PhotonControl : Photon.PunBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.LoadLevel("MainScene");
+            nowSceneID = 1;
         }
     }
 
@@ -103,9 +105,7 @@ public class PhotonControl : Photon.PunBehaviour
         bool isHelmet = true;
         bool isTracker = true;
 
-        // TODO (Scene)
-        // ....
-        int sceneID = 1;
+        int sceneID = PhotonControl.instance.nowSceneID;
 
         if (PhotonNetwork.inRoom)
         {
@@ -125,8 +125,10 @@ public class PhotonControl : Photon.PunBehaviour
         {         
             if(MainControl.instance.gameMasterControl.activeSelf)
             {
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
+                PlayerViewControl pvc = MainControl.instance.playerViewsControl.playerViewControl[id - 1];
+                pvc.SetNetState(status);
+                pvc.SetPing(ping);
+                pvc.SetSceneID(sceneID);
             }            
         }
     }
