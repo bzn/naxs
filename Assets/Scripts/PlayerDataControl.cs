@@ -12,7 +12,7 @@ public class PlayerDataControl : MonoBehaviour
     public bool isHelmet = false;
     public bool isTracker = false;
     public int sceneID = -1;
-    public Vector3 dummyPos;
+    public Transform dummyTransform;
 
     void Awake()
     {
@@ -32,7 +32,7 @@ public class PlayerDataControl : MonoBehaviour
 
     private void UpdateStatus()
     {
-        string status = PhotonNetwork.connectionStateDetailed.ToString();
+        //string status = PhotonNetwork.connectionStateDetailed.ToString();
         int ping = PhotonNetwork.GetPing();
         PhotonControl.instance.SetPingText(status + "\n" + ping + " ms");
 
@@ -43,18 +43,17 @@ public class PlayerDataControl : MonoBehaviour
 
         if (PhotonNetwork.inRoom)
         {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneID);
+            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, ping, isHelmet, isTracker, sceneID);
         }
     }
 
     [PunRPC]
-    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, int sceneID)
+    void SyncStatus(int id, int ping, bool isHelmet, bool isTracker, int sceneID)
     {
         if (id > 0)
         {
             if (GameMasterControl.instance.gameObject.activeSelf)
             {
-                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneID(sceneID);
             }

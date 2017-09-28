@@ -61,4 +61,24 @@ public class MainControl : MonoBehaviour
     {
         PhotonNetwork.Destroy(dummyGO);
     }
+
+    public void OnPhotonPlayerConnected(PhotonPlayer player)
+    {
+        Debug.Log("Player Connected = " + player.NickName);
+        int id = int.Parse(player.NickName);
+        if (id > 0)
+        {
+            GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState("O");
+        }
+    }
+
+    public void OnPhotonPlayerDisconnected(PhotonPlayer player)
+    {
+        Debug.Log("Player Disconnected =" + player.NickName);
+        int id = int.Parse(player.NickName);
+        if(id > 0)
+        {
+            GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState("-");
+        }
+    }
 }
