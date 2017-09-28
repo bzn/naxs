@@ -26,7 +26,7 @@ public class MainControl : MonoBehaviour
             return;
         }
         instance = this;
-        //DontDestroyOnLoad(gameObject);
+
     }
 
     void Start ()
