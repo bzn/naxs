@@ -9,18 +9,6 @@ public class DummyControl : MonoBehaviour
     public GameObject handRPos;    
     private PhotonView photonView;
 
-    public static DummyControl instance;
-    void Awake()
-    {
-        if (instance != null)
-        {
-            DestroyImmediate(gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     void Start()
     {
         photonView = GetComponent<PhotonView>();
