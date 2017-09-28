@@ -55,10 +55,10 @@ public class MainControl : MonoBehaviour
     void OnDestroy()
     {
         Debug.Log("AAAA");
-        if(dummyGO)
+        PhotonNetwork.DestroyAll();
+        if (dummyGO)
         {
-            Debug.Log("BBBB");
-            PhotonNetwork.Destroy(dummyGO);
+            Debug.Log("BBBB");            
         }        
     }
 
