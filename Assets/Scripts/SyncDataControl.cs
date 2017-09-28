@@ -14,7 +14,7 @@ public class SyncDataControl : MonoBehaviour
             DestroyImmediate(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         instance = this;
     }
 
