@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerDataControl : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class PlayerDataControl : MonoBehaviour
     public int ping = -1;
     public bool isHelmet = false;
     public bool isTracker = false;
-    public int sceneID = -1;
 
     void Awake()
     {
@@ -38,16 +38,19 @@ public class PlayerDataControl : MonoBehaviour
         // TODO (VIVE Status)
         // ....
         bool isHelmet = true;
-        bool isTracker = true;        
+        bool isTracker = true;
+
+        Scene scene = SceneManager.GetActiveScene();
+        string sceneName = scene.name;
 
         if (PhotonNetwork.inRoom)
         {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneID);
+            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneName);
         }
     }
 
     [PunRPC]
-    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, int sceneID)
+    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, string sceneName)
     {
         if (id > 0)
         {
@@ -59,7 +62,7 @@ public class PlayerDataControl : MonoBehaviour
                 }
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
-                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneID(sceneID);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneName(sceneName);
             }
         }
     }

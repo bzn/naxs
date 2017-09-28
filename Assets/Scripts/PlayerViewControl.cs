@@ -8,7 +8,6 @@ public class PlayerViewControl : MonoBehaviour
     private int deviceID = -1;
     private bool isHelmetOK = false;
     private bool isTrackerOK = false;
-    private int sceneID = -1;
 
     public Text deviceIDText;
     public Text netStateText;
@@ -55,10 +54,9 @@ public class PlayerViewControl : MonoBehaviour
         }
     }
 
-    public void SetSceneID(int id)
+    public void SetSceneName(string str)
     {
-        sceneID = id;
-        sceneText.text = id.ToString();
+        sceneText.text = str;
     }
 
     public void SetPing(int ping)
