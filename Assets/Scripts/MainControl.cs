@@ -59,7 +59,10 @@ public class MainControl : MonoBehaviour
 
     void OnDestroy()
     {
-        PhotonNetwork.Destroy(dummyGO);
+        if(dummyGO)
+        {
+            PhotonNetwork.Destroy(dummyGO);
+        }        
     }
 
     public void OnPhotonPlayerConnected(PhotonPlayer player)
