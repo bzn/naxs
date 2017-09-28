@@ -14,6 +14,19 @@ public class GameMasterControl : MonoBehaviour
     public Button view4Button;
     public Button view5Button;
     public Button view6Button;
+
+    public static GameMasterControl instance;
+    void Awake()
+    {
+        if (instance != null)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         godButton.onClick.AddListener(GodButtonOnClick);
