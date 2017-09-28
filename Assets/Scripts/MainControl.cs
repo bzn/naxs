@@ -11,10 +11,10 @@ public class MainControl : MonoBehaviour
     public GameObject dummysData;
     public static MainControl instance;
 
-    public GameObject gameMasterControl;
+    //public GameObject gameMasterControl;
     public GameObject cameraRig;
 
-    public PlayerViewsControl playerViewsControl;
+    //public PlayerViewsControl playerViewsControl;
 
     void Awake()
     {
@@ -24,7 +24,7 @@ public class MainControl : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start ()
@@ -33,12 +33,12 @@ public class MainControl : MonoBehaviour
         {
             if(PhotonControl.instance.deviceID == 0)
             {
-                gameMasterControl.SetActive(true);
+                GameMasterControl.instance.gameObject.SetActive(true);
                 cameraRig.SetActive(false);
             }
             else
             {
-                gameMasterControl.SetActive(false);
+                GameMasterControl.instance.gameObject.SetActive(false);
                 cameraRig.SetActive(true);
                 Debug.Log("PID" + PhotonNetwork.player.ID);
                 
@@ -46,7 +46,7 @@ public class MainControl : MonoBehaviour
             }
 
             // blues debug
-            gameMasterControl.SetActive(true);
+            GameMasterControl.instance.gameObject.SetActive(true);
         }
         else
         {

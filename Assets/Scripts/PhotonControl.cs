@@ -123,10 +123,10 @@ public class PhotonControl : Photon.PunBehaviour
     {
         if (id > 0)
         {         
-            if(MainControl.instance.gameMasterControl.activeSelf)
+            if(GameMasterControl.instance.gameObject.activeSelf)
             {
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
-                MainControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
             }            
         }
     }

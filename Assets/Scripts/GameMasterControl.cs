@@ -14,7 +14,10 @@ public class GameMasterControl : MonoBehaviour
     public Button view4Button;
     public Button view5Button;
     public Button view6Button;
-
+    public Button mainSceneButton;
+    public Button scene2Button;
+    public Button scene3Button;
+    public PlayerViewsControl playerViewsControl;
     public static GameMasterControl instance;
     void Awake()
     {
@@ -30,12 +33,16 @@ public class GameMasterControl : MonoBehaviour
     void Start()
     {
         godButton.onClick.AddListener(GodButtonOnClick);
-        view1Button.onClick.AddListener(ViewButton1OnClick);
-        view2Button.onClick.AddListener(ViewButton2OnClick);
-        view3Button.onClick.AddListener(ViewButton3OnClick);
-        view4Button.onClick.AddListener(ViewButton4OnClick);
-        view5Button.onClick.AddListener(ViewButton5OnClick);
-        view6Button.onClick.AddListener(ViewButton6OnClick);
+        view1Button.onClick.AddListener(View1ButtonOnClick);
+        view2Button.onClick.AddListener(View2ButtonOnClick);
+        view3Button.onClick.AddListener(View3ButtonOnClick);
+        view4Button.onClick.AddListener(View4ButtonOnClick);
+        view5Button.onClick.AddListener(View5ButtonOnClick);
+        view6Button.onClick.AddListener(View6ButtonOnClick);
+
+        mainSceneButton.onClick.AddListener(MainSceneButtonOnClick);
+        scene2Button.onClick.AddListener(Scene2ButtonOnClick);
+        scene3Button.onClick.AddListener(Scene3ButtonOnClick);
     }
 
     private void SetGodCameraParent(GameObject parent)
@@ -65,33 +72,48 @@ public class GameMasterControl : MonoBehaviour
         }
     }
 
-    private void ViewButton1OnClick()
+    private void View1ButtonOnClick()
     {
         ViewButtonOnClick(1);
     }
 
-    private void ViewButton2OnClick()
+    private void View2ButtonOnClick()
     {
         ViewButtonOnClick(2);
     }
 
-    private void ViewButton3OnClick()
+    private void View3ButtonOnClick()
     {
         ViewButtonOnClick(3);
     }
 
-    private void ViewButton4OnClick()
+    private void View4ButtonOnClick()
     {
         ViewButtonOnClick(4);
     }
 
-    private void ViewButton5OnClick()
+    private void View5ButtonOnClick()
     {
         ViewButtonOnClick(5);
     }
 
-    private void ViewButton6OnClick()
+    private void View6ButtonOnClick()
     {
         ViewButtonOnClick(6);
+    }
+
+    private void MainSceneButtonOnClick()
+    {
+        PhotonNetwork.LoadLevel("MainScene");
+    }
+
+    private void Scene2ButtonOnClick()
+    {
+        PhotonNetwork.LoadLevel("Scene2");
+    }
+
+    private void Scene3ButtonOnClick()
+    {
+        PhotonNetwork.LoadLevel("Scene3");
     }
 }
