@@ -104,16 +104,25 @@ public class GameMasterControl : MonoBehaviour
 
     private void MainSceneButtonOnClick()
     {
-        PhotonNetwork.LoadLevel("MainScene");
+        if(PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Scene1");
+        }        
     }
 
     private void Scene2ButtonOnClick()
     {
-        PhotonNetwork.LoadLevel("Scene2");
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Scene2");
+        }
     }
 
     private void Scene3ButtonOnClick()
     {
-        PhotonNetwork.LoadLevel("Scene3");
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Scene3");
+        }
     }
 }

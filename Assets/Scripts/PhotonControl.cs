@@ -23,6 +23,11 @@ public class PhotonControl : Photon.PunBehaviour
             deviceID = int.Parse(input);
             SetTestText("device ID=" + deviceID.ToString());
             sr.Close();
+
+            if(deviceID == 1)
+            {
+                PhotonNetwork.SetMasterClient(PhotonNetwork.player);
+            }
         }
         else
         {
@@ -65,10 +70,13 @@ public class PhotonControl : Photon.PunBehaviour
     {
         Debug.Log("Enter Game Room");
 
+        PhotonNetwork.LoadLevel("Scene1");
+        /*
         if (PhotonNetwork.isMasterClient)
         {
-            PhotonNetwork.LoadLevel("MainScene");
+            PhotonNetwork.LoadLevel("Scene1");
         }
+        */
     }
 
     void OnLevelWasLoaded(int levelNumber)

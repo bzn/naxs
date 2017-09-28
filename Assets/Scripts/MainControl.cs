@@ -14,6 +14,8 @@ public class MainControl : MonoBehaviour
     //public GameObject gameMasterControl;
     public GameObject cameraRig;
 
+    private GameObject dummyGO;
+
     //public PlayerViewsControl playerViewsControl;
 
     void Awake()
@@ -42,7 +44,7 @@ public class MainControl : MonoBehaviour
                 cameraRig.SetActive(true);
                 Debug.Log("PID" + PhotonNetwork.player.ID);
                 
-                GameObject dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
+                dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
             }
 
             // blues debug
@@ -51,7 +53,7 @@ public class MainControl : MonoBehaviour
         else
         {
             // Offline Test
-            GameObject dummyGO = Instantiate(Resources.Load("Dummy", typeof(GameObject))) as GameObject;
+            dummyGO = Instantiate(Resources.Load("Dummy", typeof(GameObject))) as GameObject;
         }        
     }
 }
