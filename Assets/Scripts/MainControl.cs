@@ -36,19 +36,14 @@ public class MainControl : MonoBehaviour
             if(PlayerDataControl.instance.deviceID == 0)
             {
                 GameMasterControl.instance.gameObject.SetActive(true);
-                cameraRig.SetActive(false);
             }
             else
             {
                 GameMasterControl.instance.gameObject.SetActive(false);
-                cameraRig.SetActive(true);
                 Debug.Log("PID" + PhotonNetwork.player.ID);
                 
                 dummyGO = PhotonNetwork.Instantiate("Dummy", new Vector3(0, 0, 0), Quaternion.identity, 0) as GameObject;
             }
-
-            // blues debug
-            GameMasterControl.instance.gameObject.SetActive(true);
         }
         else
         {
@@ -59,8 +54,10 @@ public class MainControl : MonoBehaviour
 
     void OnDestroy()
     {
+        Debug.Log("AAAA");
         if(dummyGO)
         {
+            Debug.Log("BBBB");
             PhotonNetwork.Destroy(dummyGO);
         }        
     }

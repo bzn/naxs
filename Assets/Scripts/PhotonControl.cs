@@ -21,11 +21,6 @@ public class PhotonControl : Photon.PunBehaviour
             PlayerDataControl.instance.deviceID = int.Parse(input);
             SetTestText("device ID=" + input);
             sr.Close();
-
-            if(PlayerDataControl.instance.deviceID == 0)
-            {
-                PhotonNetwork.SetMasterClient(PhotonNetwork.player);
-            }
         }
         else
         {
@@ -68,6 +63,11 @@ public class PhotonControl : Photon.PunBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.LoadLevel("Scene1");
+        }
+
+        if (PlayerDataControl.instance.deviceID == 0)
+        {
+            PhotonNetwork.SetMasterClient(PhotonNetwork.player);
         }
     }
 
