@@ -6,13 +6,11 @@ using UnityEngine.UI;
 
 public class PhotonControl : Photon.PunBehaviour
 {
-    public static PhotonControl instance;
-    public float updateRate = 1.0f;
-    public int deviceID = -1;
+    public static PhotonControl instance;    
     public Text logText;
     public Text pingText;
 
-    void Awake()
+    void Start()
     {
         string path = Application.dataPath + "//DeviceID.txt";
         if (File.Exists(path))
@@ -20,11 +18,11 @@ public class PhotonControl : Photon.PunBehaviour
             StreamReader sr = File.OpenText(path);
             string input = "";
             input = sr.ReadLine();
-            deviceID = int.Parse(input);
-            SetTestText("device ID=" + deviceID.ToString());
+            PlayerDataControl.instance.deviceID = int.Parse(input);
+            SetTestText("device ID=" + input);
             sr.Close();
 
-            if(deviceID == 1)
+            if(PlayerDataControl.instance.deviceID == 0)
             {
                 PhotonNetwork.SetMasterClient(PhotonNetwork.player);
             }
@@ -43,13 +41,10 @@ public class PhotonControl : Photon.PunBehaviour
         instance = this;
 
         PhotonNetwork.automaticallySyncScene = true;
-    }
 
-    void Start()
-    {
-        InvokeRepeating("UpdateStatus", 0, updateRate);
         PhotonNetwork.ConnectUsingSettings("v1.0");
-    }
+        PlayerDataControl.instance.UpdateStatusStart();
+    }    
 
     public override void OnConnectedToMaster()
     {
@@ -61,7 +56,7 @@ public class PhotonControl : Photon.PunBehaviour
     {
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 6;
-        PhotonNetwork.playerName = deviceID.ToString();
+        PhotonNetwork.playerName = PlayerDataControl.instance.deviceID.ToString();
 
         PhotonNetwork.JoinOrCreateRoom("MainRoom", options, TypedLobby.Default);
     }    
@@ -70,13 +65,10 @@ public class PhotonControl : Photon.PunBehaviour
     {
         Debug.Log("Enter Game Room");
 
-        PhotonNetwork.LoadLevel("Scene1");
-        /*
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.LoadLevel("Scene1");
         }
-        */
     }
 
     void OnLevelWasLoaded(int levelNumber)
@@ -100,43 +92,9 @@ public class PhotonControl : Photon.PunBehaviour
         logText.text += "\n"+str;
     }
 
-    private void UpdateStatus()
-    {
-        string status = PhotonNetwork.connectionStateDetailed.ToString();
-        int ping = PhotonNetwork.GetPing();
-        SetPingText(status + "\n" + ping + " ms");
-
-        // TODO (VIVE Status)
-        // ....
-        bool isHelmet = true;
-        bool isTracker = true;
-
-        // TODO (Scene)
-        // ....
-        int sceneID = 1;
-
-        if (PhotonNetwork.inRoom)
-        {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneID);
-        }            
-    }
-
-    private void SetPingText(string str)
+    public void SetPingText(string str)
     {
         pingText.text = str;
-    }
-
-    [PunRPC]
-    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, int sceneID)
-    {
-        if (id > 0)
-        {         
-            if(GameMasterControl.instance.gameObject.activeSelf)
-            {
-                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
-                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
-            }            
-        }
-    }
+    } 
 }
 

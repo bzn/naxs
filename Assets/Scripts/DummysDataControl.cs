@@ -13,6 +13,5 @@ public class DummysDataControl : MonoBehaviour
             return;
         }
         instance = this;
-        //DontDestroyOnLoad(gameObject);
     }
 }

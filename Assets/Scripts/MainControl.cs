@@ -33,7 +33,7 @@ public class MainControl : MonoBehaviour
     {
         if (PhotonNetwork.inRoom)
         {
-            if(PhotonControl.instance.deviceID == 0)
+            if(PlayerDataControl.instance.deviceID == 0)
             {
                 GameMasterControl.instance.gameObject.SetActive(true);
                 cameraRig.SetActive(false);
@@ -55,5 +55,10 @@ public class MainControl : MonoBehaviour
             // Offline Test
             dummyGO = Instantiate(Resources.Load("Dummy", typeof(GameObject))) as GameObject;
         }        
+    }
+
+    void OnDestroy()
+    {
+        PhotonNetwork.Destroy(dummyGO);
     }
 }
