@@ -49,4 +49,13 @@ public class DummyControl : MonoBehaviour
             handRPos.transform.rotation = MainControl.instance.controllerRPos.transform.rotation;
         }
     }
+
+    public bool IsMine()
+    {
+        if(PlayerDataControl.instance.deviceID == int.Parse(GetComponent<PhotonView>().owner.NickName))
+        {
+            return true;
+        }
+        return false;
+    }
 }

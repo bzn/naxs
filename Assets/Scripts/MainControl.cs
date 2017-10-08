@@ -8,7 +8,6 @@ public class MainControl : MonoBehaviour
     public GameObject cameraPos;
     public GameObject controllerLPos;
     public GameObject controllerRPos;
-    public GameObject dummysData;
     public static MainControl instance;
 
     //public GameObject gameMasterControl;
