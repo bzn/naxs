@@ -34,12 +34,7 @@ public class PlayerDataControl : MonoBehaviour
     private void UpdateStatus()
     {
         string status = PhotonNetwork.connectionStateDetailed.ToString();
-        int ping = PhotonNetwork.GetPing();
-
-        // TODO (VIVE Status)
-        // ....
-        bool isHelmet = true;
-        bool isTracker = true;
+        int ping = PhotonNetwork.GetPing();        
 
         Scene scene = SceneManager.GetActiveScene();
         string sceneName = scene.name;
@@ -63,6 +58,7 @@ public class PlayerDataControl : MonoBehaviour
                 }
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetViveState(isHelmet, isTracker);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneName(sceneName);
             }
         }
