@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RootMotion.FinalIK;
+
+// 同步Helmet和Tracker的資料，更新至DummyData
+
 public class DummyControl : MonoBehaviour
 {
     public GameObject headPos;    
@@ -18,23 +21,21 @@ public class DummyControl : MonoBehaviour
         vrik.solver.leftArm.target = handLPos.transform;
         vrik.solver.rightArm.target = handRPos.transform;
 
-        headPos.transform.parent = MainControl.instance.dummysData.transform;
+        headPos.transform.parent = DummysDataControl.instance.gameObject.transform;
         headPos.transform.localPosition = new Vector3(0, 0, 0);
         headPos.transform.localRotation = Quaternion.identity;
 
-        handLPos.transform.parent = MainControl.instance.dummysData.transform;
+        handLPos.transform.parent = DummysDataControl.instance.gameObject.transform;
         handLPos.transform.localPosition = new Vector3(0, 0, 0);
         handLPos.transform.localRotation = Quaternion.identity;
 
-        handRPos.transform.parent = MainControl.instance.dummysData.transform;
+        handRPos.transform.parent = DummysDataControl.instance.gameObject.transform;
         handRPos.transform.localPosition = new Vector3(0, 0, 0);
         handRPos.transform.localRotation = Quaternion.identity;
 
         Debug.Log("photonView.isMine=" + photonView.isMine.ToString());
         Debug.Log("PhotonNetwork.inRoom=" + PhotonNetwork.inRoom.ToString());
         Debug.Log("photonView.viewID=" + photonView.viewID.ToString());
-
-        PhotonControl.instance.AddTestText("photon nickname="+photonView.owner.NickName);
     }
 
     void Update()

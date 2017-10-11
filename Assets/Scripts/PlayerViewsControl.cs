@@ -5,9 +5,4 @@ using UnityEngine;
 public class PlayerViewsControl : MonoBehaviour
 {
     public PlayerViewControl[] playerViewControl;
-
-    void Awake()
-    {
-
-    }
 }

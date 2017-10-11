@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// GameMaster相關功能
+
 public class GameMasterControl : MonoBehaviour
 {
-    public GameObject godCamera;
-    public GameObject godCameraRoot;
-    public Button godButton;
+    public GameObject gmCamera;
+    public GameObject gmCameraRoot;
+    public Button gmButton;
     public Button view1Button;
     public Button view2Button;
     public Button view3Button;
@@ -19,6 +21,7 @@ public class GameMasterControl : MonoBehaviour
     public Button scene3Button;
     public PlayerViewsControl playerViewsControl;
     public static GameMasterControl instance;
+
     void Awake()
     {
         if (instance != null)
@@ -32,7 +35,7 @@ public class GameMasterControl : MonoBehaviour
 
     void Start()
     {
-        godButton.onClick.AddListener(GodButtonOnClick);
+        gmButton.onClick.AddListener(GMButtonOnClick);
         view1Button.onClick.AddListener(View1ButtonOnClick);
         view2Button.onClick.AddListener(View2ButtonOnClick);
         view3Button.onClick.AddListener(View3ButtonOnClick);
@@ -47,14 +50,14 @@ public class GameMasterControl : MonoBehaviour
 
     private void SetGodCameraParent(GameObject parent)
     {
-        godCamera.transform.parent = parent.transform;
-        godCamera.transform.localPosition = new Vector3(0, 0, 0);
-        godCamera.transform.localRotation = Quaternion.identity;        
+        gmCamera.transform.parent = parent.transform;
+        gmCamera.transform.localPosition = new Vector3(0, 0, 0);
+        gmCamera.transform.localRotation = Quaternion.identity;        
     }
 
-    private void GodButtonOnClick()
+    private void GMButtonOnClick()
     {
-        SetGodCameraParent(godCameraRoot);
+        SetGodCameraParent(gmCameraRoot);
     }
 
     private void ViewButtonOnClick(int buttonID)
@@ -66,7 +69,7 @@ public class GameMasterControl : MonoBehaviour
             if (deviceID == buttonID)
             {
                 SetGodCameraParent(gameObjects[i]);
-                godCamera.transform.localEulerAngles = new Vector3(-90f, 0, 90f);
+                gmCamera.transform.localEulerAngles = new Vector3(-90f, 0, 90f);
                 break;
             }
         }

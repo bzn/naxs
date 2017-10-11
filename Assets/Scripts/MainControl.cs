@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 進入每個Scene都會重新執行一次
+// 連線完會在這裡產生Dummy
 
 public class MainControl : MonoBehaviour
 {
@@ -9,13 +11,8 @@ public class MainControl : MonoBehaviour
     public GameObject controllerLPos;
     public GameObject controllerRPos;
     public static MainControl instance;
-
-    //public GameObject gameMasterControl;
     public GameObject cameraRig;
-
     private GameObject dummyGO;
-
-    //public PlayerViewsControl playerViewsControl;
 
     void Awake()
     {
@@ -55,7 +52,6 @@ public class MainControl : MonoBehaviour
     {
         if(PhotonNetwork.isMasterClient)
         {
-            Debug.Log("AAAA");
             PhotonNetwork.DestroyAll();
         }        
     }

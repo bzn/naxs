@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Player應廣播給其他人的所有資料
+
 public class PlayerDataControl : MonoBehaviour
 {
     public static PlayerDataControl instance;
@@ -11,7 +13,7 @@ public class PlayerDataControl : MonoBehaviour
     public string status = "";
     public int ping = -1;
     public bool isHelmet = false;
-    public bool isTracker = false;
+    public bool isTracker = false;    
 
     void Awake()
     {
@@ -33,7 +35,6 @@ public class PlayerDataControl : MonoBehaviour
     {
         string status = PhotonNetwork.connectionStateDetailed.ToString();
         int ping = PhotonNetwork.GetPing();
-        PhotonControl.instance.SetPingText(status + "\n" + ping + " ms");
 
         // TODO (VIVE Status)
         // ....
