@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 於GameMasterMode顯示的Player資料
+
 public class PlayerViewControl : MonoBehaviour
 {
     private int deviceID = -1;
@@ -14,11 +16,6 @@ public class PlayerViewControl : MonoBehaviour
     public Text viveStateText;
     public Text sceneText;
     public Text pingText;
-
-    void Awake()
-    {
-
-    }
 
     public void SetDeviceID(int id)
     {

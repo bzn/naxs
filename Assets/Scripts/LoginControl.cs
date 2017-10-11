@@ -4,9 +4,12 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 
-public class PhotonControl : Photon.PunBehaviour
+// 判斷使用者身分
+// 連線至Server
+
+public class LoginControl : Photon.PunBehaviour
 {
-    public static PhotonControl instance;    
+    public static LoginControl instance;    
     public Text logText;
     public Text pingText;
 
@@ -38,7 +41,10 @@ public class PhotonControl : Photon.PunBehaviour
         PhotonNetwork.automaticallySyncScene = true;
 
         PhotonNetwork.ConnectUsingSettings("v1.0");
-        PlayerDataControl.instance.UpdateStatusStart();
+        if(PlayerDataControl.instance.deviceID > 0)
+        {
+            PlayerDataControl.instance.UpdateStatusStart();
+        }        
     }    
 
     public override void OnConnectedToMaster()
