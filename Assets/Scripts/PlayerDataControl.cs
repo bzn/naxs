@@ -13,7 +13,8 @@ public class PlayerDataControl : MonoBehaviour
     public string status = "";
     public int ping = -1;
     public bool isHelmet = false;
-    public bool isTracker = false;    
+    public bool isTracker = false;
+    public string nowEvent = "-";
 
     void Awake()
     {
@@ -24,6 +25,7 @@ public class PlayerDataControl : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        nowEvent = "-";
     }
 
     public void UpdateStatusStart()
@@ -37,16 +39,16 @@ public class PlayerDataControl : MonoBehaviour
         int ping = PhotonNetwork.GetPing();        
 
         Scene scene = SceneManager.GetActiveScene();
-        string sceneName = scene.name;
+        string sceneName = scene.name;        
 
         if (PhotonNetwork.inRoom)
         {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneName);
+            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneName, nowEvent);
         }
     }
 
     [PunRPC]
-    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, string sceneName)
+    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, string sceneName, string eventName)
     {
         if (id > 0)
         {
@@ -60,6 +62,7 @@ public class PlayerDataControl : MonoBehaviour
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetViveState(isHelmet, isTracker);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneName(sceneName);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetEventName(eventName);
             }
         }
     }

@@ -10,28 +10,34 @@ public class PlayerData_SetViveDevice : MonoBehaviour {
 
     void OnEnable()
     {
-        if (gameObject.name.Contains("Camera"))
+        if (PlayerDataControl.instance != null)
         {
-            newPosesAction.enabled = true;
-            coroutine = WaitForCheckDeviceActivity(1.0f);
-            StartCoroutine(coroutine);
-        }
-        else if(gameObject.name.Contains("Controller (right)"))
-        {
-            PlayerDataControl.instance.isTracker = true;
+            if (gameObject.name.Contains("Camera"))
+            {
+                newPosesAction.enabled = true;
+                coroutine = WaitForCheckDeviceActivity(1.0f);
+                StartCoroutine(coroutine);
+            }
+            else if (gameObject.name.Contains("Controller (right)"))
+            {
+                PlayerDataControl.instance.isTracker = true;
+            }
         }
     }
 
     void OnDisable()
     {
-        if (gameObject.name.Contains("Camera"))
+        if (PlayerDataControl.instance != null)
         {
-            newPosesAction.enabled = false;
-            StopCoroutine(coroutine);
-        }
-        else if (gameObject.name.Contains("Controller (right)"))
-        {
-            PlayerDataControl.instance.isTracker = false;
+            if (gameObject.name.Contains("Camera"))
+            {
+                newPosesAction.enabled = false;
+                StopCoroutine(coroutine);
+            }
+            else if (gameObject.name.Contains("Controller (right)"))
+            {
+                PlayerDataControl.instance.isTracker = false;
+            }
         }
     }
 
@@ -39,12 +45,15 @@ public class PlayerData_SetViveDevice : MonoBehaviour {
     {
         isValid = false;
 
-        if (!poses[0].bDeviceIsConnected)
+        // Hmd = 0
+        int index = 0;
+
+        if (!poses[index].bDeviceIsConnected)
         {
             return;
         }
 
-        if (!poses[0].bPoseIsValid)
+        if (!poses[index].bPoseIsValid)
         {
             return;
         }
