@@ -34,7 +34,7 @@ public class MainControl : MonoBehaviour
 
         if (PhotonNetwork.inRoom)
         {
-            if(PlayerDataControl.instance.deviceID == 0)
+            if (PlayerDataControl.instance.deviceID == 0)
             {
                 GameMasterControl.instance.gameObject.SetActive(true);
             }
@@ -55,13 +55,16 @@ public class MainControl : MonoBehaviour
 
     private void setViveCameraAndTracker()
     {
-        PlayerDataControl.instance.checkViveCamera = checkViveCamera;
-        PlayerDataControl.instance.checkViveControllerRight = checkViveControllerRight;
+        if (PlayerDataControl.instance)
+        {
+            PlayerDataControl.instance.checkViveCamera = checkViveCamera;
+            PlayerDataControl.instance.checkViveControllerRight = checkViveControllerRight;
+        }
     }
 
     void OnDestroy()
     {
-        if(PhotonNetwork.isMasterClient)
+        if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.DestroyAll();
         }        
@@ -81,7 +84,7 @@ public class MainControl : MonoBehaviour
     {
         Debug.Log("Player Disconnected =" + player.NickName);
         int id = int.Parse(player.NickName);
-        if(id > 0)
+        if (id > 0)
         {
             GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState("-");
         }
