@@ -12,8 +12,8 @@ public class PlayerDataControl : MonoBehaviour
     public int deviceID = -1;
     public string status = "";
     public int ping = -1;
-    public bool isHelmet = false;
-    public bool isTracker = false;
+    public bool isViveCamera = false;
+    public bool isViveControllerRight = false;
     public string nowEvent = "-";
     public CheckViveCamera checkViveCamera;
     public CheckViveControllerRight checkViveControllerRight;
@@ -47,7 +47,7 @@ public class PlayerDataControl : MonoBehaviour
 
         if (PhotonNetwork.inRoom)
         {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneName, nowEvent);
+            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isViveCamera, isViveControllerRight, sceneName, nowEvent);
         }
     }
 
@@ -55,12 +55,12 @@ public class PlayerDataControl : MonoBehaviour
     {
         if (checkViveCamera)
         {
-            isHelmet = checkViveCamera.isViveCameraValid;
+            isViveCamera = checkViveCamera.isViveCameraValid;
         }
 
         if (checkViveControllerRight)
         {
-            isTracker = checkViveControllerRight.isViveControllerRight;
+            isViveControllerRight = checkViveControllerRight.isViveControllerRight;
         }
     }
 
