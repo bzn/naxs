@@ -20,11 +20,12 @@ public class GameMasterControl : MonoBehaviour
     public Button mainSceneButton;
     public Button scene2Button;
     public Button scene3Button;
-    public Button cameraButton;
+    public Button cameraTurnOnButton;
+    public Button cameraTurnOffButton;
     public PlayerViewsControl playerViewsControl;
     public static GameMasterControl instance;
     //
-    public bool tronMode;
+    public bool isTronMode;
 
     void Awake()
     {
@@ -35,7 +36,7 @@ public class GameMasterControl : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-        tronMode = false;
+        isTronMode = false;
     }
 
     void Start()
@@ -51,7 +52,8 @@ public class GameMasterControl : MonoBehaviour
         mainSceneButton.onClick.AddListener(MainSceneButtonOnClick);
         scene2Button.onClick.AddListener(Scene2ButtonOnClick);
         scene3Button.onClick.AddListener(Scene3ButtonOnClick);
-        cameraButton.onClick.AddListener(CameraButtonOnClick);
+        cameraTurnOnButton.onClick.AddListener(CameraTurnOnButtonOnClick);
+        cameraTurnOffButton.onClick.AddListener(CameraTurnOffButtonOnClick);
     }
 
     private void SetGodCameraParent(GameObject parent)
@@ -135,21 +137,6 @@ public class GameMasterControl : MonoBehaviour
         }
     }
 
-    private void CameraButtonOnClick()
-    {
-        tronMode = !tronMode;
-        GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, tronMode);
-    }
-
-    [PunRPC]
-    void SyncStatus(bool nowCameraMode)
-    {
-        if (GameMasterControl.instance.gameObject.activeSelf)
-        {
-            SetTronMode(nowCameraMode);
-        }
-    }
-
     EVRSettingsError SetTronMode(bool enable)
     {
         EVRSettingsError e = EVRSettingsError.None;
@@ -160,4 +147,33 @@ public class GameMasterControl : MonoBehaviour
         OpenVR.Settings.Sync(true, ref e);
         return e;
     }
+
+    private void CameraTurnOnButtonOnClick()
+    {
+        isTronMode = true;
+        SendSetCameraTronMode();
+    }
+
+    private void CameraTurnOffButtonOnClick()
+    {
+        isTronMode = false;
+        SendSetCameraTronMode();
+    }
+
+    private void SendSetCameraTronMode()
+    {
+        GetComponent<PhotonView>().RPC("SyncCamera", PhotonTargets.All, isTronMode);
+    }
+
+    [PunRPC]
+    void SyncCamera(bool nowCameraMode)
+    {
+        if (PlayerDataControl.instance.deviceID > 0)
+        {
+            if (GameMasterControl.instance.gameObject.activeSelf)
+            {
+                SetTronMode(nowCameraMode);
+            }
+        }
+    }    
 }

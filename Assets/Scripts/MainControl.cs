@@ -13,6 +13,9 @@ public class MainControl : MonoBehaviour
     public static MainControl instance;
     public GameObject cameraRig;
     private GameObject dummyGO;
+    //
+    public CheckViveCamera checkViveCamera;
+    public CheckViveControllerRight checkViveControllerRight;
 
     void Awake()
     {
@@ -27,6 +30,8 @@ public class MainControl : MonoBehaviour
 
     void Start ()
     {
+        setViveCameraAndTracker();
+
         if (PhotonNetwork.inRoom)
         {
             if(PlayerDataControl.instance.deviceID == 0)
@@ -46,6 +51,12 @@ public class MainControl : MonoBehaviour
             // Offline Test
             dummyGO = Instantiate(Resources.Load("Dummy", typeof(GameObject))) as GameObject;
         }        
+    }
+
+    private void setViveCameraAndTracker()
+    {
+        PlayerDataControl.instance.checkViveCamera = checkViveCamera;
+        PlayerDataControl.instance.checkViveControllerRight = checkViveControllerRight;
     }
 
     void OnDestroy()
