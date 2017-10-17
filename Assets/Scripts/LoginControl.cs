@@ -30,6 +30,24 @@ public class LoginControl : Photon.PunBehaviour
             SetTestText("Can't find "+ path);
         }
 
+        //
+        string masterServerAddress = "";
+
+        path = Application.dataPath + "//ServerIP.txt";
+        if (File.Exists(path))
+        {
+            StreamReader sr = File.OpenText(path);
+            string input = "";
+            input = sr.ReadLine();
+            masterServerAddress = input;
+            SetTestText("ServerIP =" + input);
+            sr.Close();
+        }
+        else
+        {
+            SetTestText("Can't find " + path);
+        }
+
         if (instance != null)
         {
             DestroyImmediate(gameObject);
@@ -40,7 +58,8 @@ public class LoginControl : Photon.PunBehaviour
 
         PhotonNetwork.automaticallySyncScene = true;
 
-        PhotonNetwork.ConnectUsingSettings("v1.0");
+        PhotonNetwork.ConnectToMaster(masterServerAddress, 5055, "319ee678-0bd3-4d65-9868-92e2a21374d5", "v1.0");
+        //PhotonNetwork.ConnectUsingSettings("v1.0");
         if(PlayerDataControl.instance.deviceID > 0)
         {
             PlayerDataControl.instance.UpdateStatusStart();

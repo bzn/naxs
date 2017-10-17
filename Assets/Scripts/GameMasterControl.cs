@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR;
 
 // GameMaster相關功能
 
@@ -19,8 +20,12 @@ public class GameMasterControl : MonoBehaviour
     public Button mainSceneButton;
     public Button scene2Button;
     public Button scene3Button;
+    public Button cameraTurnOnButton;
+    public Button cameraTurnOffButton;
     public PlayerViewsControl playerViewsControl;
     public static GameMasterControl instance;
+    //
+    public bool isTronMode;
 
     void Awake()
     {
@@ -31,6 +36,7 @@ public class GameMasterControl : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        isTronMode = false;
     }
 
     void Start()
@@ -46,6 +52,8 @@ public class GameMasterControl : MonoBehaviour
         mainSceneButton.onClick.AddListener(MainSceneButtonOnClick);
         scene2Button.onClick.AddListener(Scene2ButtonOnClick);
         scene3Button.onClick.AddListener(Scene3ButtonOnClick);
+        cameraTurnOnButton.onClick.AddListener(CameraTurnOnButtonOnClick);
+        cameraTurnOffButton.onClick.AddListener(CameraTurnOffButtonOnClick);
     }
 
     private void SetGodCameraParent(GameObject parent)
@@ -107,7 +115,7 @@ public class GameMasterControl : MonoBehaviour
 
     private void MainSceneButtonOnClick()
     {
-        if(PhotonNetwork.isMasterClient)
+        if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.LoadLevel("Scene1");
         }        
@@ -128,4 +136,60 @@ public class GameMasterControl : MonoBehaviour
             PhotonNetwork.LoadLevel("Scene3");
         }
     }
+
+    EVRSettingsError SetTronMode(bool enable)
+    {
+        EVRSettingsError e = EVRSettingsError.None;
+        OpenVR.Settings.SetBool(OpenVR.k_pch_Camera_Section,
+                                OpenVR.k_pch_Camera_EnableCameraForCollisionBounds_Bool,
+                                enable,
+                                ref e);
+        OpenVR.Settings.SetInt32(OpenVR.k_pch_Camera_Section,
+                                OpenVR.k_pch_Camera_BoundsColorGammaA_Int32,
+                                0,
+                                ref e);
+        OpenVR.Settings.SetInt32(OpenVR.k_pch_Camera_Section,
+                                OpenVR.k_pch_Camera_BoundsColorGammaR_Int32,
+                                255,
+                                ref e);
+        OpenVR.Settings.SetInt32(OpenVR.k_pch_Camera_Section,
+                                OpenVR.k_pch_Camera_BoundsColorGammaG_Int32,
+                                255,
+                                ref e);
+        OpenVR.Settings.SetInt32(OpenVR.k_pch_Camera_Section,
+                                OpenVR.k_pch_Camera_BoundsColorGammaB_Int32,
+                                255,
+                                ref e);
+        OpenVR.Settings.Sync(true, ref e);
+        return e;
+    }
+
+    private void CameraTurnOnButtonOnClick()
+    {
+        isTronMode = true;
+        SendSetCameraTronMode();
+    }
+
+    private void CameraTurnOffButtonOnClick()
+    {
+        isTronMode = false;
+        SendSetCameraTronMode();
+    }
+
+    private void SendSetCameraTronMode()
+    {
+        GetComponent<PhotonView>().RPC("SyncCamera", PhotonTargets.All, isTronMode);
+    }
+
+    [PunRPC]
+    void SyncCamera(bool nowCameraMode)
+    {
+        if (PlayerDataControl.instance.deviceID > 0)
+        {
+            if (GameMasterControl.instance.gameObject.activeSelf)
+            {
+                SetTronMode(nowCameraMode);
+            }
+        }
+    }    
 }

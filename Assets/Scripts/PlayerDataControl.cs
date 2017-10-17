@@ -12,8 +12,11 @@ public class PlayerDataControl : MonoBehaviour
     public int deviceID = -1;
     public string status = "";
     public int ping = -1;
-    public bool isHelmet = false;
-    public bool isTracker = false;    
+    public bool isViveCamera = false;
+    public bool isViveControllerRight = false;
+    public string nowEvent = "-";
+    public ViveCameraChecker viveCameraChecker;
+    public ViveControllerRightChecker viveControllerRightChecker;
 
     void Awake()
     {
@@ -24,6 +27,7 @@ public class PlayerDataControl : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        nowEvent = "-";
     }
 
     public void UpdateStatusStart()
@@ -34,24 +38,34 @@ public class PlayerDataControl : MonoBehaviour
     private void UpdateStatus()
     {
         string status = PhotonNetwork.connectionStateDetailed.ToString();
-        int ping = PhotonNetwork.GetPing();
-
-        // TODO (VIVE Status)
-        // ....
-        bool isHelmet = true;
-        bool isTracker = true;
+        int ping = PhotonNetwork.GetPing();        
 
         Scene scene = SceneManager.GetActiveScene();
         string sceneName = scene.name;
 
+        CheckHelmetAndTracker();
+
         if (PhotonNetwork.inRoom)
         {
-            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isHelmet, isTracker, sceneName);
+            GetComponent<PhotonView>().RPC("SyncStatus", PhotonTargets.All, deviceID, status, ping, isViveCamera, isViveControllerRight, sceneName, nowEvent);
+        }
+    }
+
+    private void CheckHelmetAndTracker()
+    {
+        if (viveCameraChecker)
+        {
+            isViveCamera = viveCameraChecker.isViveCameraValid;
+        }
+
+        if (viveControllerRightChecker)
+        {
+            isViveControllerRight = viveControllerRightChecker.isViveControllerRight;
         }
     }
 
     [PunRPC]
-    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, string sceneName)
+    void SyncStatus(int id, string status, int ping, bool isHelmet, bool isTracker, string sceneName, string eventName)
     {
         if (id > 0)
         {
@@ -63,7 +77,9 @@ public class PlayerDataControl : MonoBehaviour
                 }
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetNetState(status);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetPing(ping);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetViveState(isHelmet, isTracker);
                 GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetSceneName(sceneName);
+                GameMasterControl.instance.playerViewsControl.playerViewControl[id - 1].SetEventName(eventName);
             }
         }
     }

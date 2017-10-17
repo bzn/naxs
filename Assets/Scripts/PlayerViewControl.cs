@@ -15,6 +15,7 @@ public class PlayerViewControl : MonoBehaviour
     public Text netStateText;
     public Text viveStateText;
     public Text sceneText;
+    public Text eventText;
     public Text pingText;
 
     public void SetDeviceID(int id)
@@ -54,6 +55,11 @@ public class PlayerViewControl : MonoBehaviour
     public void SetSceneName(string str)
     {
         sceneText.text = str;
+    }
+
+    public void SetEventName(string str)
+    {
+        eventText.text = str;
     }
 
     public void SetPing(int ping)
