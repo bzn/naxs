@@ -8,8 +8,7 @@ using UnityEngine.UI;
 // 連線至Server
 
 public class LoginControl : Photon.PunBehaviour
-{
-    public static LoginControl instance;    
+{ 
     public Text logText;
     public Text pingText;
 
@@ -47,14 +46,6 @@ public class LoginControl : Photon.PunBehaviour
         {
             SetTestText("Can't find " + path);
         }
-
-        if (instance != null)
-        {
-            DestroyImmediate(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
-        instance = this;
 
         PhotonNetwork.automaticallySyncScene = true;
 
