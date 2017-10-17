@@ -34,9 +34,8 @@ public class ViveCameraChecker : MonoBehaviour {
     private void OnNewPoses(TrackedDevicePose_t[] poses)
     {
         isViveCameraValid = false;
-
-        // Hmd = 0
-        int index = 0;
+        
+        int index = 0;//頭盔 index為0
 
         if (!poses[index].bDeviceIsConnected)
         {
