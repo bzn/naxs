@@ -62,14 +62,6 @@ public class MainControl : MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        if (PhotonNetwork.isMasterClient)
-        {
-            PhotonNetwork.DestroyAll();
-        }        
-    }
-
     public void OnPhotonPlayerConnected(PhotonPlayer player)
     {
         Debug.Log("Player Connected = " + player.NickName);
