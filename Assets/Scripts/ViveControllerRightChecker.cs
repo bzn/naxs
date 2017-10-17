@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckViveControllerRight : MonoBehaviour {
+public class ViveControllerRightChecker : MonoBehaviour {
 
     public bool isViveControllerRight;
 

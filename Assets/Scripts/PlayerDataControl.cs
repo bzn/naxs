@@ -15,8 +15,8 @@ public class PlayerDataControl : MonoBehaviour
     public bool isViveCamera = false;
     public bool isViveControllerRight = false;
     public string nowEvent = "-";
-    public CheckViveCamera checkViveCamera;
-    public CheckViveControllerRight checkViveControllerRight;
+    public ViveCameraChecker viveCameraChecker;
+    public ViveControllerRightChecker viveControllerRightChecker;
 
     void Awake()
     {
@@ -53,14 +53,14 @@ public class PlayerDataControl : MonoBehaviour
 
     private void CheckHelmetAndTracker()
     {
-        if (checkViveCamera)
+        if (viveCameraChecker)
         {
-            isViveCamera = checkViveCamera.isViveCameraValid;
+            isViveCamera = viveCameraChecker.isViveCameraValid;
         }
 
-        if (checkViveControllerRight)
+        if (viveControllerRightChecker)
         {
-            isViveControllerRight = checkViveControllerRight.isViveControllerRight;
+            isViveControllerRight = viveControllerRightChecker.isViveControllerRight;
         }
     }
 

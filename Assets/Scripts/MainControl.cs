@@ -14,8 +14,8 @@ public class MainControl : MonoBehaviour
     public GameObject cameraRig;
     private GameObject dummyGO;
     //
-    public CheckViveCamera checkViveCamera;
-    public CheckViveControllerRight checkViveControllerRight;
+    public ViveCameraChecker viveCameraChecker;
+    public ViveControllerRightChecker viveControllerRightChecker;
 
     void Awake()
     {
@@ -57,8 +57,8 @@ public class MainControl : MonoBehaviour
     {
         if (PlayerDataControl.instance)
         {
-            PlayerDataControl.instance.checkViveCamera = checkViveCamera;
-            PlayerDataControl.instance.checkViveControllerRight = checkViveControllerRight;
+            PlayerDataControl.instance.viveCameraChecker = viveCameraChecker;
+            PlayerDataControl.instance.viveControllerRightChecker = viveControllerRightChecker;
         }
     }
 

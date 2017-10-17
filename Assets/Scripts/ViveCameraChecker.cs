@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-public class CheckViveCamera : MonoBehaviour {
+public class ViveCameraChecker : MonoBehaviour {
 
     public bool isViveCameraValid;
     private IEnumerator coroutine;
@@ -53,7 +53,7 @@ public class CheckViveCamera : MonoBehaviour {
 
     SteamVR_Events.Action newPosesAction;
 
-    CheckViveCamera()
+    ViveCameraChecker()
     {
         newPosesAction = SteamVR_Events.NewPosesAction(OnNewPoses);
     }
