@@ -117,6 +117,7 @@ public class GameMasterControl : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient)
         {
+            PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel("Scene1");
         }        
     }
@@ -125,6 +126,7 @@ public class GameMasterControl : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient)
         {
+            PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel("Scene2");
         }
     }
@@ -133,6 +135,7 @@ public class GameMasterControl : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient)
         {
+            PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel("Scene3");
         }
     }
